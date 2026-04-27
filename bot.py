@@ -1,8 +1,24 @@
 import logging
 import os
+from threading import Thread
+from flask import Flask
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler
 from dotenv import load_dotenv
+
+# Flask for Render Free Tier
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is alive!"
+
+def run():
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
 
 load_dotenv()
 
@@ -80,4 +96,5 @@ if __name__ == '__main__':
     application.add_handler(callback_handler)
     
     print("Bot is running...")
+    keep_alive()
     application.run_polling()

@@ -1,5 +1,6 @@
 python-telegram-bot
 google-generativeai
-python-dotenv
-requests
 supabase
+python-dotenv
+flask
+gunicorn
